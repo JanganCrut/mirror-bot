@@ -62,14 +62,14 @@ async def return_search(query, page=1, sukebei=False):
 
 message_info = dict()
 ignore = set()
-@app.on_message(filters.command(['nyaa']))
+@app.on_message(filters.command(['nyaa10']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sukebei']))
+@app.on_message(filters.command(['sukebei10']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -142,12 +142,12 @@ async def nyaa_callback(client, callback_query):
 def searchhelp(update, context):
     help_string = '''
 Nyaa
-• /nyaa <i>[search query]</i>
+• /nyaa10 <i>[search query]</i>
 
 Sukebei
-• /sukebei <i>[search query]</i>
+• /sukebei10 <i>[search query]</i>
 '''
-    update.effective_message.reply_photo("https://telegra.ph/file/083060d8dc0878893fa85.jpg", help_string, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_photo("https://telegra.ph/file/58c072558e21014dcfd65.png", help_string, parse_mode=ParseMode.HTML)
     
     
 SEARCHHELP_HANDLER = CommandHandler("animets", searchhelp)
