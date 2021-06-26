@@ -36,7 +36,7 @@ def stats(update, context):
     cpuUsage = psutil.cpu_percent(interval=0.5)
     memory = psutil.virtual_memory().percent
     disk = psutil.disk_usage('/').percent
-    stats = f'<b>🔁 Mirror Bot 🔁</b>\n\n' \
+    stats = f'<b>🔁 Misaka Bot 🔁</b>\n\n' \
             f'<b>Information:</b>\n' \
             f'<b>Uptime:</b> {currentTime}\n' \
             f'<b>Timezone:</b> 🇲🇾 Asia/Kuala_Lumpur\n' \
@@ -56,7 +56,7 @@ def stats(update, context):
             f'<b>Torrent Size limit:</b> <i><b>{MAX_TORRENT_SIZE}GB</b></i>\n' \
             f'<b>Google Drive limit:</b> <i><b>750GB/days</b></i>\n' \
             f'<b>\nMega Block:</b> \n📁 Folder: {BLOCK_MEGA_FOLDER} \n🔗 Link: {BLOCK_MEGA_LINKS}'
-    update.effective_message.reply_photo("https://telegra.ph/file/a3e01ed2358dbdfdcfec6.jpg", stats, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_photo("https://telegra.ph/file/58c072558e21014dcfd65.png", stats, parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -65,7 +65,7 @@ def start(update, context):
 This bot can mirror all your links to Google drive!
 Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
-    update.effective_message.reply_photo("https://telegra.ph/file/e2705c450ed0894b279ea.jpg", start_string, parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_photo("https://telegra.ph/file/58c072558e21014dcfd65.png", start_string, parse_mode=ParseMode.MARKDOWN)
 
 @run_async
 def chat_list(update, context):
@@ -130,9 +130,9 @@ def bot_help(update, context):
 
 /{BotCommands.SpeedCommand}: Check Internet Speed of the Host
 
-/animets: Get help for torrent search module.
+/animets5: Get help for torrent search module.
 
-/weebhelp: Get help for anime, manga and character module.
+/weebhelp5: Get help for anime, manga and character module.
 '''
     sendMessage(help_string, context.bot, update)
 
