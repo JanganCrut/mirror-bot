@@ -130,9 +130,9 @@ def bot_help(update, context):
 
 /{BotCommands.SpeedCommand}: Check Internet Speed of the Host
 
-/animets5: Get help for torrent search module.
+/animets10: Get help for torrent search module.
 
-/weebhelp5: Get help for anime, manga and character module.
+/weebhelp10: Get help for anime, manga and character module.
 '''
     sendMessage(help_string, context.bot, update)
 
