@@ -24,7 +24,7 @@ async def return_search(query, page=1, sukebei=False):
         results, get_time = used_search_info.get(query, (None, 0))
         if (time.time() - get_time) > 3600:
             results = []
-            async with session.get(f'https://{"sukebei." if sukebei else ""}meowinjapanese.cf/?page=rss&q={urlencode(query)}') as resp:
+            async with session.get(f'https://{"sukebei." if sukebei else ""}nyaa.si/?page=rss&q={urlencode(query)}') as resp:
                 d = feedparser.parse(await resp.text())
             text = ''
             a = 0
@@ -67,7 +67,7 @@ async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
-    await init_search(client, message, query, False)
+    await init_search(client, message, query, True)
 
 @app.on_message(filters.command(['sukebei10']))
 async def nyaa_search_sukebei(client, message):
@@ -150,5 +150,5 @@ Sukebei
     update.effective_message.reply_photo("https://telegra.ph/file/58c072558e21014dcfd65.png", help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler("animets5", searchhelp)
+SEARCHHELP_HANDLER = CommandHandler("animets10", searchhelp)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
