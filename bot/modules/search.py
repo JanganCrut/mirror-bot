@@ -59,14 +59,14 @@ async def return_search(query, page=1, sukebei=False):
 
 message_info = dict()
 ignore = set()
-@app.on_message(filters.command(['ts', 'nyaa', 'nyaasi']))
+@app.on_message(filters.command(['ts10', 'nyaa10', 'nyaasi10']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
     await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sts', 'sukebei']))
+@app.on_message(filters.command(['sts10', 'sukebei10']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -138,15 +138,15 @@ async def nyaa_callback(client, callback_query):
 @run_async
 def searchhelp(update, context):
     help_string = '''
-• /ts <i>[search query]</i>
-• /nyaa <i>[search query]</i>
-• /nyaasi <i>[search query]</i>
+• /ts10 <i>[search query]</i>
+• /nyaa10 <i>[search query]</i>
+• /nyaasi10 <i>[search query]</i>
 
-• /sts <i>[search query]</i>
-• /sukebei <i>[search query]</i>
+• /sts10 <i>[search query]</i>
+• /sukebei10 <i>[search query]</i>
 '''
-    update.effective_message.reply_photo("https://heroku.critozymirror.tk/0:/dreamer.jpg", help_string, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_photo("https://telegra.ph/file/58c072558e21014dcfd65.png", help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp)
+SEARCHHELP_HANDLER = CommandHandler("tshelp10", searchhelp)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
