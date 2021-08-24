@@ -12,7 +12,6 @@ from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from bot.helper import custom_filters
 from bot import app
-from bot.helper.telegram_helper.bot_commands import BotCommands
 session = aiohttp.ClientSession()
 search_lock = asyncio.Lock()
 search_info = {False: dict(), True: dict()}
@@ -41,11 +40,9 @@ async def return_search(query, page=1, sukebei=False):
                 newtext = f'''{a + 1}. {html.escape(i["title"])}
 <b>Link:</b> {link}
 <b>Size:</b> {i["nyaa_size"]}
-<b>Seed:</b> {i["nyaa_seeders"]}
-<b>Leech:</b> {i["nyaa_leechers"]}
-<b>Category:</b> {i["nyaa_category"]}
-<b>Mirror:</b> <code>/{BotCommands.MirrorCommand} {link}</code>
-<b>Mirror Zip:</b> <code>/{BotCommands.TarMirrorCommand} {link}</code> \n\n'''
+<b>Seeders:</b> {i["nyaa_seeders"]}
+<b>Leechers:</b> {i["nyaa_leechers"]}
+<b>Category:</b> {i["nyaa_category"]}\n\n'''
                 futtext = text + newtext
                 if (a and not a % 10) or len((await parser.parse(futtext))['message']) > 4096:
                     results.append(text)
@@ -62,14 +59,14 @@ async def return_search(query, page=1, sukebei=False):
 
 message_info = dict()
 ignore = set()
-@app.on_message(filters.command(['nyaa10']))
+@app.on_message(filters.command(['ts', 'nyaa', 'nyaasi']))
 async def nyaa_search(client, message):
     text = message.text.split(' ')
     text.pop(0)
     query = ' '.join(text)
-    await init_search(client, message, query, True)
+    await init_search(client, message, query, False)
 
-@app.on_message(filters.command(['sukebei10']))
+@app.on_message(filters.command(['sts', 'sukebei']))
 async def nyaa_search_sukebei(client, message):
     text = message.text.split(' ')
     text.pop(0)
@@ -81,7 +78,7 @@ async def init_search(client, message, query, sukebei):
     if not result:
         await message.reply_text('No results found')
     else:
-        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton('➡', 'nyaa_next')]
+        buttons = [InlineKeyboardButton(f'1/{pages}', 'nyaa_nop'), InlineKeyboardButton('Next', 'nyaa_next')]
         if pages == 1:
             buttons.pop()
         reply = await message.reply_text(result, reply_markup=InlineKeyboardMarkup([
@@ -121,7 +118,7 @@ async def nyaa_callback(client, callback_query):
                 await callback_query.answer('...no', cache_time=3600)
                 return
             text, pages, ttl = await return_search(query, current_page, sukebei)
-        buttons = [InlineKeyboardButton('⬅', 'nyaa_back'), InlineKeyboardButton(f'「 {current_page}/{pages} 」', 'nyaa_nop'), InlineKeyboardButton('➡', 'nyaa_next')]
+        buttons = [InlineKeyboardButton('Back', 'nyaa_back'), InlineKeyboardButton(f'{current_page}/{pages}', 'nyaa_nop'), InlineKeyboardButton('Next', 'nyaa_next')]
         if ttl_ended:
             buttons = [InlineKeyboardButton('Search Expired', 'nyaa_nop')]
         else:
@@ -141,14 +138,15 @@ async def nyaa_callback(client, callback_query):
 @run_async
 def searchhelp(update, context):
     help_string = '''
-Nyaa
-• /nyaa10 <i>[search query]</i>
+• /ts <i>[search query]</i>
+• /nyaa <i>[search query]</i>
+• /nyaasi <i>[search query]</i>
 
-Sukebei
-• /sukebei10 <i>[search query]</i>
+• /sts <i>[search query]</i>
+• /sukebei <i>[search query]</i>
 '''
-    update.effective_message.reply_photo("https://telegra.ph/file/58c072558e21014dcfd65.png", help_string, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_photo("https://heroku.critozymirror.tk/0:/dreamer.jpg", help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler("animets10", searchhelp)
+SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
